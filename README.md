@@ -38,6 +38,8 @@ Can machine learning models accurately predict the occurrence and severity of ro
 #### Data Sources
 The analysis will utilize the US Accidents dataset from Kaggle, filtered by state (such as California, Texas, or another of interest). The dataset contains millions of accident records across the US, but the analysis will be limited to one chosen state for computational feasibility and model relevance. 
 
+**Note:** US_Accidents_March23.csv is too large to upload to github (even with git-lfs). I have not uploaded the [US Accidents (2016 - 2023)](https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents).  I read this data file locallay on my Mac and created subset of the records only for California state the [US_Accident_California.csv](https://github.com/hemant280/berkely-ai-ml-capstone/blob/data/US_Accidents_California.csv) is uploaded to github. The US_Accidents_March23.csv and US_Accidents_Californa.csv have same schema and details, except US_Accidents_Californa.csv is subset of US_Accidents_March23.csv
+
 #### Methodology
 - Exploratory data analysis and feature engineering on state-specific traffic, weather, and behavioral factors
 - Machine learning models (such as Random Forest, Gradient Boosting, Logistic Regression) with algorithm selection based on the data volume and complexity
