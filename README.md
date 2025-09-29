@@ -2,8 +2,6 @@
 
 **Hemant Deshpande**
 
-[Juypter Notebook](https://github.com/hemant280/berkely-ai-ml-capstone/blob/main/analysis.ipynb)
-
 [Environment Details (requrement.txt)](https://github.com/hemant280/berkely-ai-ml-capstone/requirement.txt)
 
 <hr/>
@@ -58,179 +56,144 @@ Following steps taken to prepare and train model.
 
 ### Exploratory Data Analysis (EDA)
 
-The exploratory data analysis was conducted on California accident data spanning from 2016 to 2023, encompassing over 1.2 million accident records. The analysis integrated accident data with state-level vehicle registration and licensed driver statistics to provide comprehensive insights into traffic safety patterns.
+## EDA Summary
 
-#### Dataset Overview and Preprocessing
+Comprehensive exploratory data analysis was conducted on road accident data for both California and Oregon, spanning from 2016 to 2023. The analysis integrated accident data with state-level vehicle registration and licensed driver statistics to provide insights into traffic safety patterns specific to each state's unique geographic and climatic conditions.
 
-**Data Sources Integration:**
-- **Primary Dataset**: US Accidents dataset filtered for California (2016-2023)
-- **Supporting Data**: Motor vehicle registrations and licensed drivers by year
-- **Final Dataset**: 1,200,000+ accident records with 25+ features after preprocessing
+### Key Findings Overview
 
-**Data Quality and Missing Values:**
-- Identified columns with >10% missing values: End_Lat (100%), End_Lng (100%), Wind_Chill(F) (54.8%), Precipitation(in) (37.9%)
-- Removed irrelevant geographic coordinates and weather timestamp columns for state-level analysis
-- Applied median imputation for numerical features with <10% missing values
-- Converted categorical weather conditions to encoded format for analysis
+**Dataset Scope:**
+- **California**: 1,200,000+ accident records with 25+ features after preprocessing
+- **Oregon**: State-specific accident records with comprehensive feature preprocessing
+- **Time Period**: 2016-2023 for both states
+- **Data Integration**: Accident data merged with vehicle registration and licensed driver statistics
 
-#### Feature Distribution Analysis
-
-The analysis included comprehensive statistical examination of all numerical and categorical features:
-
-**Numerical Feature Distributions:**
-- Generated box plots, histograms, and Q-Q plots for all numerical variables
-- Key findings include right-skewed distributions for most traffic-related variables
-- Severity levels show concentrated distribution around moderate impact levels (2-3)
-
-![Severity Analysis](images/Severity_analysis.png)
-![Temperature Analysis](images/Temperature(F)_analysis.png)
-![Humidity Analysis](images/Humidity(%)_analysis.png)
-![Visibility Analysis](images/Visibility(mi)_analysis.png)
+### State Comparison Analysis
 
 #### Temporal Patterns
+**California:**
+- Peak accident months: October, November, December (fall/winter pattern)
+- Friday shows highest incident count among weekdays
+- 70% of accidents occur during weekdays
 
-**Monthly Distribution:**
-- **Peak Accident Months**: October, November, and December show highest incident counts
-- **Seasonal Trends**: Fall and winter months demonstrate increased accident frequency, likely due to reduced daylight hours and weather conditions
-- **Average Severity**: Remains relatively consistent across months (2.0-2.2 range)
-
-![Monthly Incident Patterns](images/incidents_by_month_california.png)
-
-**Weekly Patterns:**
-- **Weekday vs Weekend**: Friday shows the highest incident count, followed by Thursday and Wednesday
-- **Weekend Effect**: Saturday and Sunday show lower incident counts but slightly higher average severity
-- **Commuter Impact**: Clear pattern indicating higher accident frequency during weekdays, correlating with commuter traffic
-
-![Weekly Incident Patterns](images/incidents_by_weekday_california.png)
+**Oregon:**
+- Different seasonal patterns due to Pacific Northwest climate
+- Weather-driven seasonality with rainy season impact
+- Portland metro area influences weekday patterns
 
 #### Geographic Distribution
+**California:**
+- Top counties: Los Angeles, Orange, San Diego, Sacramento, Riverside
+- Urban metropolitan areas dominate incident counts
+- Top 5 counties account for 60% of all accidents
 
-**County-Level Analysis:**
-- **Top Counties by Incidents**: Los Angeles, Orange, San Diego, Sacramento, and Riverside counties lead in absolute numbers
-- **Urban vs Rural**: Metropolitan areas show significantly higher incident counts, reflecting population density and traffic volume
-- **Severity Patterns**: Rural counties tend to show slightly higher average severity scores
-
-![County-Level Distribution](images/incidents_by_County_california.png)
-
-**City-Level Insights:**
-- **Major Cities**: Los Angeles, San Diego, Sacramento, and San Jose dominate incident counts
-- **Traffic Density Correlation**: Cities with higher population and traffic density show proportionally more accidents
-
-![City-Level Distribution](images/incidents_by_City_california.png)
+**Oregon:**
+- Portland metro dominance: Multnomah, Washington, Clackamas counties
+- Interstate corridors (I-5, I-84) show elevated frequencies
+- Concentration in Portland metro with distinct rural patterns
 
 #### Weather and Environmental Factors
+**California:**
+- Clear weather dominance (>60% of accidents)
+- Moderate temperature ranges (60-80°F) most common
+- Lower humidity levels typical of California climate
 
-**Weather Conditions:**
-- **Clear Weather Dominance**: Majority of accidents (>60%) occur during clear weather conditions
-- **Adverse Weather Impact**: Rain, fog, and cloudy conditions show higher average severity scores
-- **Visibility Correlation**: Lower visibility conditions (0-5 miles) correlate with increased accident severity
+**Oregon:**
+- Higher correlation between weather conditions and accident severity
+- Frequent rainfall creates unique risk patterns
+- Coastal and valley fog significantly impacts visibility
+- Higher humidity levels due to Pacific Northwest climate
 
-![Weather Condition Analysis](images/incidents_by_Weather_Condition_california.png)
-![Visibility Impact Analysis](images/incidents_by_Visibility(mi)_california.png)
+#### Infrastructure Impact
+**California:**
+- Traffic signals show 3x higher accident frequency at intersections
+- Major metropolitan intersections are high-risk areas
+- Complex intersections with multiple traffic control devices
 
-**Environmental Variables:**
-- **Temperature**: Most accidents occur in moderate temperature ranges (60-80°F)
-- **Humidity**: Higher humidity levels (>70%) show slight correlation with increased incident frequency
-- **Wind Speed**: Moderate wind speeds (5-15 mph) are most common during accidents
-- **Pressure**: Standard atmospheric pressure ranges dominate accident occurrences
+**Oregon:**
+- Portland area shows high concentration of traffic control devices
+- Different infrastructure patterns between rural and urban areas
+- Interstate and state highway infrastructure impacts
 
-![Wind Speed Analysis](images/Wind_Speed(mph)_analysis.png)
-![Pressure Analysis](images/Pressure(in)_analysis.png)
+### Comparative Risk Factors
 
-#### Infrastructure and Road Features
+#### High-Risk Scenarios
+**Both States:**
+- Weekday commute hours show elevated risk
+- Reduced visibility conditions increase severity
+- Complex intersections with traffic control devices
 
-**Point of Interest (POI) Analysis:**
-- **Traffic Signals**: High correlation with accident locations, indicating intersection-related incidents
-- **Junctions**: Significant presence in accident data, confirming intersection safety concerns
-- **Amenities**: Areas near amenities show increased accident frequency due to higher traffic volume
-- **Traffic Calming Features**: Presence of speed bumps and traffic calming measures shows mixed correlation with accident severity
+**California-Specific:**
+- Friday afternoons and metropolitan intersections
+- Fall/winter months (40% increase)
+- Major highway interchanges
 
-![Traffic Signal Analysis](images/Traffic_Signal_analysis.png)
-![Junction Analysis](images/Junction_analysis.png)
-![Traffic Calming Analysis](images/Traffic_Calming_analysis.png)
+**Oregon-Specific:**
+- Weather-related risks (rain, fog)
+- Winter weather conditions
+- Mountain passes and coastal highways
+- Urban vs rural pattern differences
 
-#### Vehicle and Driver Demographics
+#### Protective Factors
+**Both States:**
+- Clear weather conditions reduce severity
+- Weekend periods show lower incident frequency
+- Traffic calming measures in appropriate areas
 
-**Vehicle Registration Trends:**
-- **Fleet Growth**: California vehicle registrations increased from ~27M to ~30M vehicles (2016-2023)
-- **Accident Rate Correlation**: Accident frequency shows positive correlation with total registered vehicles
-- **Per-Vehicle Risk**: Accident rate per registered vehicle remained relatively stable over the analysis period
+**State-Specific Advantages:**
+- **California**: Consistent weather patterns, established infrastructure
+- **Oregon**: Weather preparedness, effective traffic management systems
 
-![Vehicle Registration Trends](images/incidents_by_Total_Vehicles_california.png)
-![Total Vehicles Analysis](images/Total_Vehicles_analysis.png)
+### Modeling Recommendations
 
-**Licensed Driver Statistics:**
-- **Driver Population**: Licensed drivers in California increased from ~25M to ~27M (2016-2023)
-- **Driver-to-Accident Ratio**: Approximately 45 accidents per 1,000 licensed drivers annually
-- **Risk Factors**: Higher driver density correlates with increased absolute accident numbers
+#### Feature Engineering Priorities
+1. **Temporal Features**: Day of week, month, seasonal patterns
+2. **Weather Integration**: Visibility, precipitation, temperature ranges
+3. **Geographic Clustering**: County/city-level risk stratification
+4. **Infrastructure Encoding**: Traffic control device presence and density
 
-![Driver Statistics](images/incidents_by_Total_Drivers_california.png)
-![Total Drivers Analysis](images/Total_Drivers_analysis.png)
+#### Model Development Strategy
+1. **State-Specific Models**: Develop separate models for each state due to distinct patterns
+2. **Ensemble Approach**: Combine temporal, geographic, and weather-based models
+3. **Risk Stratification**: Separate models for urban vs rural areas within each state
+4. **Severity Prediction**: Multi-class classification for accident severity levels
 
-#### Severity and Impact Analysis
+#### Recommended Algorithms
+1. **Random Forest**: Handle mixed data types and non-linear relationships
+2. **XGBoost**: Capture complex interactions between features
+3. **Logistic Regression**: Baseline model for interpretability
+4. **Neural Networks**: For complex pattern recognition in high-dimensional data
 
-**Severity Distribution:**
-- **Severity Levels**: Majority of accidents fall into Severity 2 (moderate impact) category
-- **Severe Incidents**: Severity 3 and 4 incidents represent ~15% of total accidents but have disproportionate traffic impact
-- **Duration Impact**: Higher severity accidents correlate with longer traffic impact duration
+#### Cross-Validation Strategy
+- **Temporal Split**: Train on earlier years, test on recent years
+- **Geographic Split**: Train on subset of counties, test on others
+- **Stratified Sampling**: Maintain severity level distributions
 
-**Impact Duration Patterns:**
-- **Short Duration**: Most accidents (>80%) resolved within 2-3 hours
-- **Extended Impact**: Accidents with >4 hour duration typically involve severe incidents or complex cleanup
-- **Traffic Flow**: Longer duration accidents show higher severity scores and greater traffic disruption
+### Implementation Recommendations
 
-![Impact Duration Analysis](images/incidents_by_Impact_Duration_HR_california.png)
-![Impact Duration Distribution](images/Impact_Duration_HR_analysis.png)
+#### Data Preprocessing
+1. **Missing Value Strategy**: Median imputation for numerical, mode for categorical
+2. **Feature Scaling**: StandardScaler for continuous variables
+3. **Categorical Encoding**: Label encoding for weather conditions, one-hot for infrastructure
+4. **Outlier Treatment**: IQR-based outlier detection and treatment
 
-#### Correlation Analysis
+#### Model Evaluation Metrics
+1. **Classification Metrics**: Accuracy, Precision, Recall, F1-Score
+2. **Class-Specific Performance**: Per-severity level evaluation
+3. **Geographic Performance**: County/region-specific model performance
+4. **Temporal Stability**: Performance consistency across time periods
 
-**Comprehensive Feature Correlation:**
-The correlation matrix reveals important relationships between variables that inform model development and risk factor identification.
+#### Deployment Considerations
+1. **Real-Time Prediction**: Integration with traffic management systems
+2. **Alert Systems**: Automated warnings for high-risk conditions
+3. **Resource Allocation**: Predictive insights for emergency response planning
+4. **Policy Support**: Evidence-based recommendations for traffic safety initiatives
 
-![Correlation Matrix](images/correlation_matrix.png)
+### Detailed State Analysis
 
-**Key Correlations Identified:**
-- **Strong Positive Correlations** (>0.8): Total_Vehicles and Total_Drivers (0.99), indicating consistent vehicle-to-driver ratios
-- **Weather Correlations**: Temperature and humidity show moderate negative correlation (-0.4)
-- **Infrastructure Correlations**: Traffic signals and junctions show positive correlation with accident frequency
-- **Temporal Correlations**: Start_Year shows weak correlations with most variables, indicating stable patterns over time
+For comprehensive state-specific analysis, including detailed visualizations, statistical summaries, and in-depth insights:
 
-#### Infrastructure Feature Analysis
+- **[California EDA Report](README_EDA_CA.md)** - Complete analysis of California accident patterns, including 34 distinct visualizations covering temporal, geographic, weather, and infrastructure factors
+- **[Oregon EDA Report](README_EDA_OR.md)** - Comprehensive Oregon-specific analysis highlighting Pacific Northwest climate impacts, urban-rural patterns, and state-unique risk factors
 
-**Road Infrastructure Elements:**
-Detailed analysis of various road infrastructure elements and their relationship to accident occurrence:
-
-![Amenity Analysis](images/Amenity_analysis.png)
-![Crossing Analysis](images/Crossing_analysis.png)
-![Roundabout Analysis](images/Roundabout_analysis.png)
-![Railway Analysis](images/Railway_analysis.png)
-
-#### Key Insights and Risk Factors
-
-**High-Risk Scenarios:**
-1. **Temporal**: Friday afternoons and weekday commute hours
-2. **Geographic**: Major metropolitan intersections and highway interchanges
-3. **Environmental**: Reduced visibility conditions and adverse weather
-4. **Infrastructure**: Complex intersections with multiple traffic control devices
-
-**Protective Factors:**
-1. **Clear Weather**: Significantly lower severity in optimal weather conditions
-2. **Traffic Calming**: Areas with speed reduction measures show lower severity
-3. **Weekend Periods**: Lower overall incident frequency during weekends
-
-**Data-Driven Recommendations:**
-1. **Targeted Enforcement**: Focus on high-risk counties and cities during peak hours
-2. **Infrastructure Improvements**: Enhanced safety measures at major intersections
-3. **Weather-Based Alerts**: Real-time warnings during adverse weather conditions
-4. **Seasonal Campaigns**: Increased safety awareness during fall/winter months
-
-#### Statistical Summary
-
-The EDA revealed several critical patterns:
-- **Temporal Concentration**: 70% of accidents occur during weekdays, with Friday being the peak day
-- **Geographic Concentration**: Top 5 counties account for 60% of all accidents
-- **Weather Impact**: Clear weather accounts for 65% of accidents, but adverse weather increases severity
-- **Infrastructure Correlation**: Intersections with traffic signals show 3x higher accident frequency
-- **Seasonal Variation**: 40% increase in accidents during fall/winter months
-
-This comprehensive EDA, supported by detailed visualizations and statistical analysis, provides the foundation for developing predictive models and identifying actionable interventions to improve road safety across California's transportation network.
+These detailed reports provide the foundation for developing accurate, state-specific predictive models and identifying targeted interventions to improve road safety across both transportation networks.
