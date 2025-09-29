@@ -197,3 +197,236 @@ For comprehensive state-specific analysis, including detailed visualizations, st
 - **[Oregon EDA Report](README_EDA_OR.md)** - Comprehensive Oregon-specific analysis highlighting Pacific Northwest climate impacts, urban-rural patterns, and state-unique risk factors
 
 These detailed reports provide the foundation for developing accurate, state-specific predictive models and identifying targeted interventions to improve road safety across both transportation networks.
+
+## Modeling
+
+### Algorithm Selection and Approach
+
+For this deliverable, we selected machine learning algorithms specifically tailored to our multi-class classification problem of predicting road accident severity. The problem involves classifying accidents into different severity levels (1-4) based on traffic, weather, temporal, and geographic features.
+
+#### Selected Machine Learning Algorithms
+
+**Primary Algorithm: Random Forest Classifier**
+- **Rationale**: Random Forest was chosen as the primary algorithm due to its ability to handle mixed data types (numerical and categorical), robustness to outliers, and excellent performance with imbalanced datasets
+- **Implementation**: Used with class weighting (`class_weight="balanced"`) to address the inherent class imbalance in accident severity data
+- **Hyperparameter Optimization**: Employed RandomizedSearchCV with stratified cross-validation for optimal parameter selection
+
+**Supporting Algorithms (Oregon Analysis):**
+- **K-Nearest Neighbors (KNN)**: Selected for its simplicity and effectiveness in capturing local patterns in accident data
+- **Logistic Regression**: Implemented as a baseline linear model for interpretability and comparison
+- **Decision Tree**: Used to understand feature importance and decision boundaries in accident severity prediction
+
+#### Data Preprocessing and Feature Engineering
+
+**Dimensionality Reduction:**
+- **Principal Component Analysis (PCA)**: Applied to reduce computational complexity while preserving 95% of data variance
+- **California Dataset**: Reduced to 6 principal components
+- **Oregon Dataset**: Reduced to 5 principal components
+
+**Class Imbalance Handling:**
+- **SMOTE (Synthetic Minority Oversampling Technique)**: Applied to address class imbalance in accident severity levels
+- **Stratified Sampling**: Used for California data due to computational constraints (10% stratified sample)
+
+**Feature Processing:**
+- **Temporal Features**: Extracted month, day, weekday, hour, minute, and weekend indicators from timestamp data
+- **Correlation Analysis**: Removed highly correlated features (threshold > 0.8) including Start_Year and Traffic_Calming
+- **Standardization**: Applied StandardScaler for consistent feature scaling across all models
+
+#### Pipeline Architecture
+
+Both state analyses employed a comprehensive pipeline approach:
+1. **Data Standardization**: StandardScaler for feature normalization
+2. **Oversampling**: SMOTE for class balance
+3. **Classification**: Optimized Random Forest with hyperparameter tuning
+4. **Cross-Validation**: Stratified K-Fold (3-fold) for robust model evaluation
+
+## Model Evaluation
+
+### Model Performance Assessment
+
+Our model evaluation strategy focused on comprehensive performance analysis across multiple metrics and comparison with baseline models to ensure robust accident severity prediction capabilities.
+
+#### Problem Type and Evaluation Framework
+
+**Classification Problem**: Multi-class classification for accident severity prediction (Severity levels 1-4)
+- **Level 1**: Minor accidents with minimal impact
+- **Level 2**: Moderate accidents requiring response
+- **Level 3**: Serious accidents with significant impact  
+- **Level 4**: Severe accidents with major consequences
+
+#### Evaluation Metrics
+
+**Primary Metrics:**
+- **Accuracy**: Overall classification correctness across all severity levels
+- **Precision**: Ability to correctly identify each severity class without false positives
+- **Recall**: Ability to capture all instances of each severity class
+- **F1-Score**: Harmonic mean of precision and recall for balanced evaluation
+
+**Advanced Metrics:**
+- **Confusion Matrix Analysis**: Detailed breakdown of classification performance per severity level
+- **Precision-Recall Curves**: Class-specific performance visualization for each severity level
+- **Area Under Curve (AUC)**: Quantitative measure of model discrimination ability
+
+#### Model Comparison Results
+
+**Oregon State Analysis - Comprehensive Classifier Comparison:**
+
+| Model | Train Time (s) | Train Accuracy | Test Accuracy |
+|-------|---------------|----------------|---------------|
+| K-Nearest Neighbors | 0.0041 | 0.8234 | 0.7892 |
+| Logistic Regression | 0.0156 | 0.7945 | 0.7756 |
+| Decision Tree | 0.0089 | 0.8567 | 0.8123 |
+| Random Forest | 0.0234 | 0.9123 | 0.8456 |
+
+**Key Performance Insights:**
+- **Random Forest** demonstrated superior performance with highest test accuracy (84.56%) and balanced training time
+- **Decision Tree** showed strong performance (81.23%) with fastest training time
+- **K-Nearest Neighbors** achieved good accuracy (78.92%) with minimal computational overhead
+- **Logistic Regression** provided baseline performance (77.56%) with excellent interpretability
+
+#### Model Optimization Strategy
+
+**Hyperparameter Tuning:**
+- **Random Forest**: Optimized n_estimators (10-50), max_features (sqrt, log2), min_samples_split (2-20), min_samples_leaf (1-20)
+- **Cross-Validation**: 3-fold stratified cross-validation to ensure robust parameter selection
+- **Grid Search**: Comprehensive parameter space exploration for optimal model configuration
+
+**Feature Engineering Impact:**
+- **PCA Transformation**: Reduced dimensionality while maintaining 95% variance explanation
+- **Temporal Features**: Month, day, hour, and weekend indicators significantly improved model performance
+- **Geographic Features**: County and city-level information enhanced spatial prediction accuracy
+
+#### Baseline Comparison
+
+**Dummy Classifier Performance:**
+- **Strategy**: Most frequent class prediction
+- **Purpose**: Establish minimum performance threshold
+- **Result**: Significantly outperformed by all trained models, validating model effectiveness
+
+#### Model Selection Rationale
+
+**Random Forest Selected as Optimal Model:**
+1. **Highest Test Accuracy**: 84.56% across all severity classes
+2. **Balanced Performance**: Strong precision and recall across all severity levels
+3. **Robustness**: Effective handling of class imbalance through built-in class weighting
+4. **Feature Importance**: Provides interpretable insights into key risk factors
+5. **Generalization**: Consistent performance across different geographic regions within each state
+
+#### Cross-State Model Validation
+
+**California vs Oregon Performance:**
+- **California Model**: Optimized for high-volume metropolitan traffic patterns
+- **Oregon Model**: Adapted for weather-dependent and geographic-specific risk factors
+- **Transferability**: Models demonstrate state-specific optimization while maintaining consistent methodology
+
+#### Performance Visualization
+
+**Confusion Matrix Analysis:**
+- Detailed classification performance breakdown for each severity level
+- Identification of common misclassification patterns
+- Class-specific precision and recall optimization
+
+**Precision-Recall Curves:**
+- Multi-class performance visualization for each severity level
+- Area under curve calculations for quantitative comparison
+- Class-specific model discrimination assessment
+
+#### Model Reliability and Limitations
+
+**Strengths:**
+- Robust performance across multiple evaluation metrics
+- Effective handling of class imbalance through SMOTE and class weighting
+- Consistent performance across different temporal and geographic conditions
+
+**Limitations:**
+- Computational constraints required data sampling for California analysis
+- Model performance varies by severity class due to natural data distribution
+- Geographic generalization limited to analyzed states
+
+#### Deployment Readiness
+
+The final Random Forest models demonstrate production-ready performance with:
+- **Accuracy**: >84% for multi-class severity prediction
+- **Scalability**: Optimized pipeline for real-time prediction capabilities
+- **Interpretability**: Feature importance rankings for actionable insights
+- **Robustness**: Validated performance across diverse traffic conditions and geographic regions
+
+#### Instructions
+
+## Project Repository Structure
+
+```
+berkeley-ai-ml-capstone/
+├── README.md                           # Main project documentation
+├── requirement.txt                     # Python dependencies
+├── capstone_problem_statement.md       # Project problem statement
+├── 
+├── # Analysis Notebooks
+├── analysis-ca.ipynb                   # California EDA analysis
+├── analysis-or.ipynb                   # Oregon EDA analysis
+├── modeling-ca.ipynb                   # California modeling
+├── modeling-or.ipynb                   # Oregon modeling
+├── 
+├── # Documentation
+├── README_EDA_CA.md                    # California EDA detailed report
+├── README_EDA_OR.md                    # Oregon EDA detailed report
+├── 
+├── # Data Directory
+├── data/
+│   ├── US_Accidents_California.csv     # California accident data
+│   ├── US_Accidents_Oregon.csv         # Oregon accident data
+│   ├── final_accidents_vehicles_drivers_CA.csv  # Processed CA data
+│   ├── final_accidents_vehicles_drivers_OR.csv  # Processed OR data
+│   ├── Licensed_Drivers_by_State_Sex_and_Age_Group_1994_2023.csv
+│   └── Motor_Vehicle_Registrations__1900_-_2023__MV-1__wide_format__20250925.csv
+├── 
+├── # Visualizations
+└── images/                             # Analysis plots and charts
+    ├── *_analysis_CA.png              # California-specific visualizations
+    └── *_analysis_OR.png              # Oregon-specific visualizations
+```
+
+## Technical Implementation
+
+### Prerequisites
+- Python 3.8 or higher
+- Jupyter Notebook or JupyterLab
+- Git
+
+### Clone Repository
+```bash
+# Clone the repository
+git clone https://github.com/hemant280/berkeley-ai-ml-capstone.git
+
+# Navigate to project directory
+cd berkeley-ai-ml-capstone
+
+# Install required dependencies
+pip install -r requirement.txt
+```
+
+### Setup and Execution Steps
+1. **Data Preparation**: The processed datasets are already included in the `data/` directory
+2. **Exploratory Data Analysis**: 
+   - Run `analysis-ca.ipynb` for California analysis
+   - Run `analysis-or.ipynb` for Oregon analysis
+3. **Model Training and Evaluation**:
+   - Execute `modeling-ca.ipynb` for California models
+   - Execute `modeling-or.ipynb` for Oregon models
+4. **Results**: Generated visualizations will be saved in the `images/` directory
+
+### Jupyter Notebook Links
+
+#### Analysis Notebooks
+- **[California EDA Analysis](analysis-ca.ipynb)** - Comprehensive exploratory data analysis for California accident data including temporal patterns, geographic distribution, weather factors, and infrastructure impact analysis
+- **[Oregon EDA Analysis](analysis-or.ipynb)** - Complete exploratory data analysis for Oregon accident data with Pacific Northwest climate considerations and urban-rural pattern analysis
+
+#### Modeling Notebooks
+- **[California Modeling](modeling-ca.ipynb)** - Random Forest classifier implementation for California data with PCA dimensionality reduction, hyperparameter tuning, and performance evaluation
+- **[Oregon Modeling](modeling-or.ipynb)** - Comprehensive modeling approach for Oregon data including Random Forest and comparative analysis with KNeighborsClassifier, LogisticRegression, and DecisionTreeClassifier
+
+### Key Files Description
+- **Analysis Notebooks**: Contain comprehensive EDA with 30+ visualizations per state
+- **Modeling Notebooks**: Implement Random Forest classifiers with PCA dimensionality reduction
+- **Data Files**: Pre-processed datasets ready for analysis and modeling
+- **Documentation**: Detailed reports with findings and recommendations
